@@ -469,17 +469,38 @@
           lastTime = now;
           handler(e);
         };
-        // 使用 pointerdown 和 click 双保险，保障各个平台设备都能响应
-        el.addEventListener('pointerdown', doHandle, { passive: false });
+        // 使用 touchstart, touchend 和 click 多重保险，保障各个平台设备都能响应
+        el.addEventListener('touchstart', doHandle, { passive: false });
+        el.addEventListener('touchend', doHandle, { passive: false });
         el.addEventListener('click', doHandle);
       }
 
+      // 手机端第一次触屏或点击自动解锁音频限制
+      function unlockAudio() {
+        if (!audioList || audioList.length === 0) return;
+        audioList.forEach(a => {
+          a.play().then(() => {
+            a.pause();
+          }).catch(() => { });
+        });
+        document.removeEventListener('touchstart', unlockAudio, true);
+        document.removeEventListener('click', unlockAudio, true);
+      }
+      document.addEventListener('touchstart', unlockAudio, true);
+      document.addEventListener('click', unlockAudio, true);
+
       // 全屏点击：如果点击区域是按钮，就不触发这里的逻辑，防止冲突
-      addEventListener('pointerdown', (e) => {
+      const fullScreenInteract = (e) => {
         if (e.target.closest('.btn') || e.target.closest('.song-name')) return;
-        boomAt(e.clientX, e.clientY);
+        // 兼容Touch和Mouse的坐标
+        const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
+        boomAt(clientX, clientY);
         tryStartMusic();
-      }, { passive: true });
+      };
+
+      addEventListener('touchstart', fullScreenInteract, { passive: true });
+      addEventListener('mousedown', fullScreenInteract, { passive: true });
 
       const boomBtn = document.getElementById('boom');
       const toggleBtn = document.getElementById('toggleSound');
