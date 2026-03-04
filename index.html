@@ -1,127 +1,230 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <title>欢迎李总回归</title>
   <style>
-    :root{
-      --gold:#ffd36a;
-      --gold2:#ffb300;
-      --bg:#05060a;
+    :root {
+      --gold: #ffd36a;
+      --gold2: #ffb300;
+      --bg: #05060a;
     }
-    html,body{height:100%;}
-    body{
-      margin:0;
-      overflow:hidden;
+
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      overflow: hidden;
       background: radial-gradient(1200px 600px at 50% 30%, #11162a 0%, var(--bg) 55%, #000 100%);
-      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC","Microsoft Yahei", Arial, sans-serif;
-      color:#fff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "PingFang SC", "Microsoft Yahei", Arial, sans-serif;
+      color: #fff;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
 
     /* 顶部提示（可删） */
-    .hint{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform:translateX(-50%);
-      padding:10px 14px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
+    .hint {
+      position: fixed;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      padding: 10px 14px;
+      background: rgba(0, 0, 0, .35);
+      border: 1px solid rgba(255, 255, 255, .12);
       backdrop-filter: blur(10px);
-      border-radius:999px;
-      font-size:13px;
-      user-select:none;
-      pointer-events:none;
-      opacity:.9;
-      white-space:nowrap;
+      border-radius: 999px;
+      font-size: 13px;
+      user-select: none;
+      pointer-events: none;
+      opacity: .9;
+      white-space: nowrap;
+      z-index: 8;
     }
 
     /* 横幅 */
-    .banner-wrap{
-      position:fixed;
-      inset:0;
-      display:flex;
-      align-items:flex-start;
-      justify-content:center;
-      padding-top:12vh;
-      pointer-events:none;
-      z-index:5;
+    .banner-wrap {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 12vh;
+      pointer-events: none;
+      z-index: 5;
     }
-    .banner{
-      text-align:center;
-      padding:18px 22px;
-      border-radius:18px;
-      background:linear-gradient(180deg, rgba(255,211,106,.18), rgba(255,179,0,.06));
-      border:1px solid rgba(255,211,106,.35);
+
+    .banner {
+      text-align: center;
+      padding: 18px 22px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255, 211, 106, .18), rgba(255, 179, 0, .06));
+      border: 1px solid rgba(255, 211, 106, .35);
       box-shadow:
-        0 12px 40px rgba(0,0,0,.45),
-        0 0 30px rgba(255,179,0,.18);
+        0 12px 40px rgba(0, 0, 0, .45),
+        0 0 30px rgba(255, 179, 0, .18);
       transform: translateY(-8px);
       animation: floaty 2.8s ease-in-out infinite;
     }
-    .title{
+
+    .title {
       font-size: clamp(34px, 5vw, 64px);
       font-weight: 900;
       letter-spacing: 2px;
       line-height: 1.05;
-      margin:0;
+      margin: 0;
       background: linear-gradient(90deg, #fff6cc, var(--gold), #fff, var(--gold2));
       background-size: 220% 100%;
       -webkit-background-clip: text;
-      background-clip:text;
+      background-clip: text;
       color: transparent;
-      text-shadow: 0 0 18px rgba(255,179,0,.25);
+      text-shadow: 0 0 18px rgba(255, 179, 0, .25);
       animation: shine 3.2s linear infinite;
     }
-    .sub{
-      margin-top:10px;
+
+    .sub {
+      margin-top: 10px;
       font-size: clamp(14px, 2.2vw, 18px);
-      opacity:.92;
-      letter-spacing:.5px;
-    }
-    .sub b{color:var(--gold);}
-    @keyframes shine{
-      0%{background-position:0% 0%}
-      100%{background-position:220% 0%}
-    }
-    @keyframes floaty{
-      0%,100%{transform:translateY(-8px)}
-      50%{transform:translateY(8px)}
+      opacity: .92;
+      letter-spacing: .5px;
     }
 
-    canvas{
-      position:fixed;
-      inset:0;
-      width:100%;
-      height:100%;
-      z-index:1;
+    .sub b {
+      color: var(--gold);
     }
 
-    /* 右上角“静音/播放”按钮（可选） */
-    .btn{
-      position:fixed;
-      top:14px;
-      right:14px;
-      z-index:10;
-      display:flex;
-      gap:10px;
-      align-items:center;
+    @keyframes shine {
+      0% {
+        background-position: 0% 0%
+      }
+
+      100% {
+        background-position: 220% 0%
+      }
     }
-    .btn button{
-      cursor:pointer;
-      border:none;
-      border-radius:12px;
-      padding:10px 12px;
-      background:rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.12);
-      color:#fff;
-      font-size:13px;
+
+    @keyframes floaty {
+
+      0%,
+      100% {
+        transform: translateY(-8px)
+      }
+
+      50% {
+        transform: translateY(8px)
+      }
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    /* 右上角按钮 */
+    .btn {
+      position: fixed;
+      top: 14px;
+      right: 14px;
+      z-index: 10;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      pointer-events: auto;
+    }
+
+    .btn button {
+      cursor: pointer;
+      border: none;
+      border-radius: 12px;
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, .35);
+      border: 1px solid rgba(255, 255, 255, .12);
+      color: #fff;
+      font-size: 13px;
       backdrop-filter: blur(10px);
+      touch-action: manipulation;
     }
-    .btn button:active{transform:scale(.98)}
+
+    .btn button:active {
+      transform: scale(.98)
+    }
+
+    /* 音乐名称显示 */
+    .song-name {
+      position: fixed;
+      top: 14px;
+      left: 14px;
+      z-index: 10;
+      padding: 8px 14px;
+      background: rgba(0, 0, 0, .45);
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 12px;
+      font-size: 14px;
+      color: #fff;
+      backdrop-filter: blur(10px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      pointer-events: auto;
+    }
+
+    #volumeControl {
+      cursor: pointer;
+      width: 80px;
+      vertical-align: middle;
+    }
+
+    .ctrl-btn {
+      cursor: pointer;
+      border: none;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 50%;
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      transition: background 0.2s, transform 0.1s;
+      padding: 0;
+    }
+
+    .ctrl-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    .ctrl-btn:active {
+      transform: scale(0.9);
+    }
+
+    .song-name.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .music-icon {
+      animation: spin 3s linear infinite;
+    }
+
+    @keyframes spin {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
   </style>
 </head>
+
 <body>
 
   <canvas id="c"></canvas>
@@ -134,237 +237,347 @@
   </div>
 
   <div class="btn">
-    <button id="boom">来一发烟花 💥</button>
-    <button id="toggleSound">音乐：关 🔇</button>
+    <button id="boom" type="button">来一发烟花 💥</button>
+    <button id="toggleSound" type="button">打开音乐 �</button>
   </div>
 
-  <div class="hint">提示：点击/触屏任意位置都会放烟花（微信里也行）</div>
+  <div class="hint">提示：点击/触屏任意位置都会放烟花（按钮也能用）</div>
 
-  <!-- 可选：背景音乐（你把 music.mp3 放同目录即可） -->
-  <audio id="bgm" loop preload="auto">
-    <source src="music.mp3" type="audio/mpeg" />
-  </audio>
+  <!-- 歌曲名称显示框 -->
+  <div id="songDisplay" class="song-name">
+    <button id="prevSong" class="ctrl-btn" title="上一首">⏮</button>
+    <span class="music-icon">💿</span>
+    <span id="songText">正在播放：未知</span>
+    <button id="nextSong" class="ctrl-btn" title="下一首">⏭</button>
+    <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="0.5" title="音量调节">
+  </div>
 
-<script>
-(() => {
-  const canvas = document.getElementById('c');
-  const ctx = canvas.getContext('2d', { alpha: true });
+  <!-- 移除了原本的 audio 标签，交给JS动态控制播放两首歌 -->
 
-  const DPR = Math.min(2, window.devicePixelRatio || 1);
-  function resize(){
-    canvas.width = Math.floor(innerWidth * DPR);
-    canvas.height = Math.floor(innerHeight * DPR);
-    canvas.style.width = innerWidth + 'px';
-    canvas.style.height = innerHeight + 'px';
-    ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
-  }
-  addEventListener('resize', resize);
-  resize();
+  <script>
+    (() => {
+      const canvas = document.getElementById('c');
+      const ctx = canvas.getContext('2d', { alpha: true });
 
-  // 随机工具
-  const rand = (a,b)=>a+Math.random()*(b-a);
-  const pick = arr => arr[(Math.random()*arr.length)|0];
-  const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
-
-  // 粒子/火箭
-  const particles = [];
-  const rockets = [];
-
-  const gravity = 0.06;
-  const friction = 0.985;
-
-  function hsl(h,s,l,a=1){
-    return `hsla(${h},${s}%,${l}%,${a})`;
-  }
-
-  class Rocket{
-    constructor(x, y){
-      this.x = x;
-      this.y = y;
-      this.vx = rand(-0.8,0.8);
-      this.vy = rand(-12.5,-9.5);
-      this.hue = rand(0,360);
-      this.life = 0;
-      this.trail = [];
-    }
-    step(){
-      this.life++;
-      this.vx *= 0.995;
-      this.vy += gravity * 0.35;
-      this.x += this.vx;
-      this.y += this.vy;
-
-      this.trail.push({x:this.x, y:this.y});
-      if(this.trail.length > 14) this.trail.shift();
-
-      // 到顶爆炸
-      if(this.vy > -1.5 || this.life > 120){
-        explode(this.x, this.y, this.hue);
-        return false;
+      const DPR = Math.min(2, window.devicePixelRatio || 1);
+      function resize() {
+        canvas.width = Math.floor(innerWidth * DPR);
+        canvas.height = Math.floor(innerHeight * DPR);
+        canvas.style.width = innerWidth + 'px';
+        canvas.style.height = innerHeight + 'px';
+        ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
       }
-      return true;
-    }
-    draw(){
-      // 尾焰
-      for(let i=0;i<this.trail.length;i++){
-        const p = this.trail[i];
-        const t = i / this.trail.length;
-        ctx.fillStyle = hsl(this.hue, 100, 65, t*0.7);
+      addEventListener('resize', resize);
+      resize();
+
+      // 随机工具
+      const rand = (a, b) => a + Math.random() * (b - a);
+      const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+
+      // 粒子/火箭
+      const particles = [];
+      const rockets = [];
+
+      const gravity = 0.06;
+      const friction = 0.985;
+
+      function hsl(h, s, l, a = 1) {
+        return `hsla(${h},${s}%,${l}%,${a})`;
+      }
+
+      class Rocket {
+        constructor(x, y) {
+          this.x = x;
+          this.y = y;
+          this.vx = rand(-1.2, 1.2);
+          this.vy = rand(-14, -10); // 增加发射初速度高度
+          this.hue = rand(0, 360);
+          this.life = 0;
+          this.trail = [];
+        }
+        step() {
+          this.life++;
+          this.vx *= 0.995;
+          this.vy += gravity * 0.35;
+          this.x += this.vx;
+          this.y += this.vy;
+
+          this.trail.push({ x: this.x, y: this.y });
+          if (this.trail.length > 18) this.trail.shift(); // 拖尾更长一点
+
+          // 到顶爆炸，或者飞行足够久
+          if (this.vy > -1.5 || this.life > 140) {
+            explode(this.x, this.y, this.hue);
+            return false;
+          }
+          return true;
+        }
+        draw() {
+          // 尾焰
+          for (let i = 0; i < this.trail.length; i++) {
+            const p = this.trail[i];
+            const t = i / this.trail.length;
+            ctx.fillStyle = hsl(this.hue, 100, 65, t * 0.8);
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, 3 * t, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          // 火箭点
+          ctx.fillStyle = hsl(this.hue, 100, 80, 1);
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      class Particle {
+        constructor(x, y, baseHue) {
+          this.x = x; this.y = y;
+          const ang = rand(0, Math.PI * 2);
+          // 分层：核心区域速度慢且存留长，外围喷发速度快
+          const isCore = Math.random() < 0.3;
+          const spd = isCore ? rand(1.0, 3.5) : rand(3.5, 12.0);
+          this.vx = Math.cos(ang) * spd;
+          this.vy = Math.sin(ang) * spd;
+
+          // 添加小概率的异色烟花，色彩更生动
+          const isMultiColor = Math.random() < 0.15;
+          this.hue = isMultiColor ? rand(0, 360) : baseHue + rand(-20, 20);
+
+          this.alpha = 1;
+          this.decay = isCore ? rand(0.015, 0.035) : rand(0.008, 0.018);
+          this.size = rand(1.5, 3.8); // 粒子可稍微大点
+          this.twinkle = Math.random() < 0.35; // 提高闪烁星光概率
+        }
+        step() {
+          this.vx *= friction;
+          this.vy *= friction;
+          this.vy += gravity * 1.5; // 让粒子下垂曲线更自然
+          this.x += this.vx;
+          this.y += this.vy;
+          this.alpha -= this.decay;
+          return this.alpha > 0;
+        }
+        draw() {
+          const a = this.twinkle ? this.alpha * rand(0.3, 1) : this.alpha;
+          ctx.fillStyle = hsl(this.hue, 100, 65, clamp(a, 0, 1));
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      function explode(x, y, hue) {
+        const count = (innerWidth < 520) ? 120 : 250; // 显著增加爆炸粒子数量
+        for (let i = 0; i < count; i++) {
+          particles.push(new Particle(x, y, hue));
+        }
+        flash(x, y, hue);
+      }
+
+      function flash(x, y, hue) {
+        const r = (innerWidth < 520) ? 90 : 140;
+        const g = ctx.createRadialGradient(x, y, 0, x, y, r);
+        g.addColorStop(0, hsl(hue, 100, 70, 0.35));
+        g.addColorStop(1, 'rgba(0,0,0,0)');
+        ctx.fillStyle = g;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2.2*t, 0, Math.PI*2);
+        ctx.arc(x, y, r, 0, Math.PI * 2);
         ctx.fill();
       }
-      // 火箭点
-      ctx.fillStyle = hsl(this.hue,100,80,0.9);
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, 2.2, 0, Math.PI*2);
-      ctx.fill();
-    }
-  }
 
-  class Particle{
-    constructor(x,y,hue){
-      this.x=x; this.y=y;
-      const ang = rand(0,Math.PI*2);
-      const spd = rand(1.5, 7.8);
-      this.vx = Math.cos(ang)*spd;
-      this.vy = Math.sin(ang)*spd;
-      this.hue = hue + rand(-18,18);
-      this.alpha = 1;
-      this.decay = rand(0.010, 0.018);
-      this.size = rand(1.2, 2.6);
-      this.twinkle = Math.random() < 0.18;
-    }
-    step(){
-      this.vx *= friction;
-      this.vy *= friction;
-      this.vy += gravity;
-      this.x += this.vx;
-      this.y += this.vy;
-      this.alpha -= this.decay;
-      return this.alpha > 0;
-    }
-    draw(){
-      const a = this.twinkle ? this.alpha * rand(0.55, 1) : this.alpha;
-      ctx.fillStyle = hsl(this.hue, 100, 60, clamp(a,0,1));
-      ctx.beginPath();
-      ctx.arc(this.x, this.y, this.size, 0, Math.PI*2);
-      ctx.fill();
-    }
-  }
+      // 自动发射
+      let autoTimer = 0;
+      function autoLaunch() {
+        autoTimer++;
+        const every = (innerWidth < 520) ? 22 : 16;
+        if (autoTimer % every === 0) {
+          const x = rand(innerWidth * 0.15, innerWidth * 0.85);
+          rockets.push(new Rocket(x, innerHeight + 10));
+        }
+        if (autoTimer % 120 === 0) {
+          const x = rand(innerWidth * 0.2, innerWidth * 0.8);
+          const r = new Rocket(x, innerHeight + 10);
+          r.vy = rand(-14.5, -12.5);
+          rockets.push(r);
+        }
+      }
 
-  function explode(x,y,hue){
-    const count = (innerWidth < 520) ? 80 : 120;
-    for(let i=0;i<count;i++){
-      particles.push(new Particle(x,y,hue));
-    }
-    // 中心闪光
-    flash(x,y,hue);
-  }
+      // 点击/触屏：直接在点的位置爆炸
+      function boomAt(clientX, clientY) {
+        explode(clientX, clientY, rand(0, 360));
+      }
 
-  function flash(x,y,hue){
-    const r = (innerWidth < 520) ? 90 : 140;
-    const g = ctx.createRadialGradient(x,y,0,x,y,r);
-    g.addColorStop(0, hsl(hue,100,70,0.35));
-    g.addColorStop(1, 'rgba(0,0,0,0)');
-    ctx.fillStyle = g;
-    ctx.beginPath();
-    ctx.arc(x,y,r,0,Math.PI*2);
-    ctx.fill();
-  }
+      // ============== 🎵 音乐控制逻辑（支持多首歌曲） ==============
+      // 这里可以自由配置你的歌曲名。src是文件名，name是你想显示在左上角的文字
+      const playlist = [
+        { src: 'Perfect-Ed Sheeran.mp3', name: 'Perfect - Ed Sheeran' },
+        { src: '反方向的钟-周杰伦.mp3', name: '反方向的钟 - 周杰伦' }
+      ];
+      let currentMusicIndex = -1; // -1表示处于“关闭”状态，0=第一首, 1=第二首
 
-  // 自动发射
-  let autoTimer = 0;
-  function autoLaunch(){
-    autoTimer++;
-    const every = (innerWidth < 520) ? 22 : 16; // 小屏少点，省电
-    if(autoTimer % every === 0){
-      const x = rand(innerWidth*0.15, innerWidth*0.85);
-      rockets.push(new Rocket(x, innerHeight + 10));
-    }
-    // 偶尔来个“大一点”的
-    if(autoTimer % 120 === 0){
-      const x = rand(innerWidth*0.2, innerWidth*0.8);
-      const r = new Rocket(x, innerHeight + 10);
-      r.vy = rand(-14.5, -12.5);
-      rockets.push(r);
-    }
-  }
+      const songDisplay = document.getElementById('songDisplay');
+      const songText = document.getElementById('songText');
+      const volumeControl = document.getElementById('volumeControl');
+      const prevSongBtn = document.getElementById('prevSong');
+      const nextSongBtn = document.getElementById('nextSong');
 
-  // 点击/触屏：直接在点的位置爆炸（更爽）
-  function boomAt(clientX, clientY){
-    const x = clientX;
-    const y = clientY;
-    explode(x,y,rand(0,360));
-  }
-  addEventListener('pointerdown', (e) => {
-    boomAt(e.clientX, e.clientY);
-    tryStartMusic();
-  }, { passive:true });
+      // 预先创建 Audio 对象方便管理
+      const audioList = playlist.map(item => {
+        const a = new Audio(item.src);
+        a.preload = 'auto'; // 提早缓冲
+        a.volume = volumeControl.value; // 初始化音量
+        a.addEventListener('ended', () => {
+          let nextIdx = currentMusicIndex + 1;
+          if (nextIdx >= playlist.length) nextIdx = 0;
+          playSong(nextIdx);
+        });
+        return a;
+      });
 
-  // 按钮：发射一枚火箭（像按下发射键）
-  document.getElementById('boom').addEventListener('click', () => {
-    rockets.push(new Rocket(rand(innerWidth*0.2, innerWidth*0.8), innerHeight + 10));
-    tryStartMusic();
-  });
+      // 监听音量条滑动
+      volumeControl.addEventListener('input', (e) => {
+        const vol = e.target.value;
+        audioList.forEach(a => a.volume = vol);
+      });
 
-  // 背景音乐（微信/手机一般需要用户交互后才能播放）
-  const bgm = document.getElementById('bgm');
-  let soundOn = false;
+      async function tryStartMusic() {
+        // 只有在主动播放状态下才尝试唤起播放
+        if (currentMusicIndex === -1) return;
+        try {
+          await audioList[currentMusicIndex].play();
+        } catch (e) {
+          // 用户未交互前可能无法播放
+        }
+      }
 
-  function tryStartMusic(){
-    if(!bgm) return;
-    if(soundOn) return;
-    // 默认关；用户触摸后再尝试播放（如果你想默认开，就把 soundOn=true，并在首次交互播放）
-  }
+      function stopAllMusic() {
+        audioList.forEach(a => {
+          a.pause();
+          a.currentTime = 0; // 重置进度
+        });
+      }
 
-  const toggleBtn = document.getElementById('toggleSound');
-  toggleBtn.addEventListener('click', async () => {
-    if(!bgm) return;
-    soundOn = !soundOn;
-    toggleBtn.textContent = soundOn ? '音乐：开 🔊' : '音乐：关 🔇';
-    if(soundOn){
-      try{ await bgm.play(); }catch(err){ /* 某些环境会拦截，交互后再试 */ }
-    }else{
-      bgm.pause();
-      bgm.currentTime = 0;
-    }
-  });
+      // ✅ 加入防抖防重发的安全按钮绑定
+      function bindFastTap(el, handler) {
+        let lastTime = 0;
+        const doHandle = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const now = Date.now();
+          if (now - lastTime < 300) return; // 节流，避免一次点击触发多次事件
+          lastTime = now;
+          handler(e);
+        };
+        // 使用 pointerdown 和 click 双保险，保障各个平台设备都能响应
+        el.addEventListener('pointerdown', doHandle, { passive: false });
+        el.addEventListener('click', doHandle);
+      }
 
-  // 主循环
-  function frame(){
-    // 半透明覆盖产生拖影
-    ctx.fillStyle = 'rgba(0,0,0,0.22)';
-    ctx.fillRect(0,0,innerWidth,innerHeight);
+      // 全屏点击：如果点击区域是按钮，就不触发这里的逻辑，防止冲突
+      addEventListener('pointerdown', (e) => {
+        if (e.target.closest('.btn') || e.target.closest('.song-name')) return;
+        boomAt(e.clientX, e.clientY);
+        tryStartMusic();
+      }, { passive: true });
 
-    autoLaunch();
+      const boomBtn = document.getElementById('boom');
+      const toggleBtn = document.getElementById('toggleSound');
 
-    // 火箭
-    for(let i=rockets.length-1;i>=0;i--){
-      const r = rockets[i];
-      if(!r.step()) rockets.splice(i,1);
-      else r.draw();
-    }
+      bindFastTap(boomBtn, () => {
+        // 🎉 满屏烟花盛宴！
+        const w = innerWidth;
+        const h = innerHeight;
 
-    // 粒子
-    for(let i=particles.length-1;i>=0;i--){
-      const p = particles[i];
-      if(!p.step()) particles.splice(i,1);
-      else p.draw();
-    }
+        // 1. 立刻在天上不同位置炸开5朵大烟花，制造瞬间的震撼感
+        setTimeout(() => explode(w * 0.2, h * 0.3, rand(0, 360)), 0);
+        setTimeout(() => explode(w * 0.8, h * 0.3, rand(0, 360)), 150);
+        setTimeout(() => explode(w * 0.5, h * 0.2, rand(0, 360)), 300);
+        setTimeout(() => explode(w * 0.35, h * 0.4, rand(0, 360)), 450);
+        setTimeout(() => explode(w * 0.65, h * 0.4, rand(0, 360)), 600);
 
-    requestAnimationFrame(frame);
-  }
-  frame();
+        // 2. 从底部密集发射15枚火箭，随机延时升空补足后续效果
+        for (let i = 0; i < 15; i++) {
+          setTimeout(() => {
+            rockets.push(new Rocket(rand(w * 0.1, w * 0.9), h + 10));
+          }, rand(200, 1500));
+        }
 
-  // 首次进来送一波“欢迎礼炮”
-  setTimeout(() => {
-    for(let i=0;i<4;i++){
-      rockets.push(new Rocket(rand(innerWidth*0.2, innerWidth*0.8), innerHeight + 10));
-    }
-  }, 500);
+        tryStartMusic();
+      });
 
-})();
-</script>
+      function playSong(index) {
+        stopAllMusic();
+        currentMusicIndex = index;
+        toggleBtn.textContent = '关闭音乐 🔇';
+        songText.textContent = '正在播放：' + playlist[currentMusicIndex].name;
+        songDisplay.classList.add('show');
+        tryStartMusic();
+      }
+
+      bindFastTap(prevSongBtn, () => {
+        if (currentMusicIndex === -1) return;
+        let nextIdx = currentMusicIndex - 1;
+        if (nextIdx < 0) nextIdx = playlist.length - 1;
+        playSong(nextIdx);
+      });
+
+      bindFastTap(nextSongBtn, () => {
+        if (currentMusicIndex === -1) return;
+        let nextIdx = currentMusicIndex + 1;
+        if (nextIdx >= playlist.length) nextIdx = 0;
+        playSong(nextIdx);
+      });
+
+      bindFastTap(toggleBtn, () => {
+        if (currentMusicIndex === -1) {
+          playSong(0); // 默认从第一首开始播放
+        } else {
+          stopAllMusic();
+          currentMusicIndex = -1;
+          toggleBtn.textContent = '打开音乐 🔊';
+          songDisplay.classList.remove('show');
+        }
+      });
+
+      // 主循环
+      function frame() {
+        ctx.fillStyle = 'rgba(0,0,0,0.22)';
+        ctx.fillRect(0, 0, innerWidth, innerHeight);
+
+        autoLaunch();
+
+        // 设置叠加发光模式，能让多层烟花的重叠处变得无比明亮梦幻
+        ctx.globalCompositeOperation = 'lighter';
+
+        for (let i = rockets.length - 1; i >= 0; i--) {
+          const r = rockets[i];
+          if (!r.step()) rockets.splice(i, 1);
+          else r.draw();
+        }
+
+        for (let i = particles.length - 1; i >= 0; i--) {
+          const p = particles[i];
+          if (!p.step()) particles.splice(i, 1);
+          else p.draw();
+        }
+
+        // 恢复原有模式，确保背景渐隐能正确执行
+        ctx.globalCompositeOperation = 'source-over';
+
+        requestAnimationFrame(frame);
+      }
+      frame();
+
+      // 首次进来送一波欢迎礼炮
+      setTimeout(() => {
+        for (let i = 0; i < 4; i++) {
+          rockets.push(new Rocket(rand(innerWidth * 0.2, innerWidth * 0.8), innerHeight + 10));
+        }
+      }, 500);
+
+    })();
+  </script>
 </body>
+
 </html>
