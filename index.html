@@ -155,77 +155,7 @@
       transform: scale(.98)
     }
 
-    /* 音乐名称显示 */
-    .song-name {
-      position: fixed;
-      top: 14px;
-      left: 14px;
-      max-width: calc(100vw - 32px);
-      box-sizing: border-box;
-      z-index: 10;
-      padding: 8px 12px;
-      background: rgba(0, 0, 0, .45);
-      border: 1px solid rgba(255, 255, 255, .15);
-      border-radius: 12px;
-      font-size: 13px;
-      color: #fff;
-      backdrop-filter: blur(10px);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      transform: translateY(-10px);
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      pointer-events: auto;
-    }
-
-    #volumeControl {
-      cursor: pointer;
-      width: 60px;
-      vertical-align: middle;
-      flex-shrink: 0;
-    }
-
-    .ctrl-btn {
-      cursor: pointer;
-      border: none;
-      background: rgba(255, 255, 255, 0.15);
-      border-radius: 50%;
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 16px;
-      transition: background 0.2s, transform 0.1s;
-      padding: 0;
-      flex-shrink: 0;
-    }
-
-    .ctrl-btn:hover {
-      background: rgba(255, 255, 255, 0.3);
-    }
-
-    .ctrl-btn:active {
-      transform: scale(0.9);
-    }
-
-    .song-name.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .music-icon {
-      animation: spin 3s linear infinite;
-    }
-
-    @keyframes spin {
-      100% {
-        transform: rotate(360deg);
-      }
-    }
+    /* 移除了音乐播放器的复杂显示样式 */
   </style>
 </head>
 
@@ -242,19 +172,11 @@
 
   <div class="btn">
     <button id="boom" type="button">来一发烟花 💥</button>
-    <button id="toggleSound" type="button">打开音乐 �</button>
+    <button id="toggleSound" type="button">打开音乐 🔊</button>
+    <button id="nextSongBtn" type="button" style="display: none;">下一首 ⏭</button>
   </div>
 
   <div class="hint">提示：点击/触屏任意位置都会放烟花（按钮也能用）</div>
-
-  <!-- 歌曲名称显示框 -->
-  <div id="songDisplay" class="song-name">
-    <button id="prevSong" class="ctrl-btn" title="上一首">⏮</button>
-    <span class="music-icon">💿</span>
-    <span id="songText">正在播放：未知</span>
-    <button id="nextSong" class="ctrl-btn" title="下一首">⏭</button>
-    <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="0.5" title="音量调节">
-  </div>
 
   <!-- 移除了原本的 audio 标签，交给JS动态控制播放两首歌 -->
 
@@ -420,29 +342,18 @@
       ];
       let currentMusicIndex = -1; // -1表示处于“关闭”状态，0=第一首, 1=第二首
 
-      const songDisplay = document.getElementById('songDisplay');
-      const songText = document.getElementById('songText');
-      const volumeControl = document.getElementById('volumeControl');
-      const prevSongBtn = document.getElementById('prevSong');
-      const nextSongBtn = document.getElementById('nextSong');
+      const nextSongBtn = document.getElementById('nextSongBtn');
 
       // 预先创建 Audio 对象方便管理
       const audioList = playlist.map(item => {
         const a = new Audio(item.src);
         a.preload = 'auto'; // 提早缓冲
-        a.volume = volumeControl.value; // 初始化音量
         a.addEventListener('ended', () => {
           let nextIdx = currentMusicIndex + 1;
           if (nextIdx >= playlist.length) nextIdx = 0;
           playSong(nextIdx);
         });
         return a;
-      });
-
-      // 监听音量条滑动
-      volumeControl.addEventListener('input', (e) => {
-        const vol = e.target.value;
-        audioList.forEach(a => a.volume = vol);
       });
 
       async function tryStartMusic() {
@@ -478,7 +389,7 @@
 
       // 全屏点击：如果点击区域是按钮，就不触发这里的逻辑，防止冲突
       const fullScreenInteract = (e) => {
-        if (e.target.closest('.btn') || e.target.closest('.song-name')) return;
+        if (e.target.closest('.btn')) return;
         // 兼容Touch和Mouse的坐标
         const clientX = e.touches && e.touches.length > 0 ? e.touches[0].clientX : e.clientX;
         const clientY = e.touches && e.touches.length > 0 ? e.touches[0].clientY : e.clientY;
@@ -518,17 +429,9 @@
         stopAllMusic();
         currentMusicIndex = index;
         toggleBtn.textContent = '关闭音乐 🔇';
-        songText.textContent = '播放：' + playlist[currentMusicIndex].name;
-        songDisplay.classList.add('show');
+        nextSongBtn.style.display = 'inline-block';
         tryStartMusic();
       }
-
-      prevSongBtn.addEventListener('click', () => {
-        if (currentMusicIndex === -1) return;
-        let nextIdx = currentMusicIndex - 1;
-        if (nextIdx < 0) nextIdx = playlist.length - 1;
-        playSong(nextIdx);
-      });
 
       nextSongBtn.addEventListener('click', () => {
         if (currentMusicIndex === -1) return;
@@ -544,7 +447,7 @@
           stopAllMusic();
           currentMusicIndex = -1;
           toggleBtn.textContent = '打开音乐 🔊';
-          songDisplay.classList.remove('show');
+          nextSongBtn.style.display = 'none';
         }
       });
 
